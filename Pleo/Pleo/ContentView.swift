@@ -7,13 +7,21 @@
 
 import SwiftUI
 
+// PLEO = (I sail, travel by sea, voyage.)
+
 struct ContentView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Welcome To Pleo")
                 .font(.title)
                 .bold()
-            Text("Maybe the BEST AI-Powered finance advicer")
+            HStack {
+                Text("Maybe the BEST")
+                Text("AI-Powered")
+                    .fontDesign(.monospaced)
+                    .foregroundStyle(.blue)
+                Text("finance advicer.")
+            }
         }
     }
 }
