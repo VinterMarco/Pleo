@@ -9,7 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-      LoadView()
+        VStack(alignment: .leading) {
+            Text("Welcome To Pleo")
+                .font(.title)
+                .bold()
+            Text("Maybe the BEST AI-Powered finance advicer")
+        }
     }
 }
 
