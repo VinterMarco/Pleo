@@ -9,18 +9,23 @@ import SwiftUI
 
 // PLEO = (I sail, travel by sea, voyage.)
 
+@MainActor
 struct ContentView: View {
+    @EnvironmentObject var viewModel : AuthViewModel
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Welcome To Pleo")
-                .font(.title)
-                .bold()
-            HStack {
-                Text("Maybe the BEST")
-                Text("AI-Powered")
-                    .fontDesign(.monospaced)
-                    .foregroundStyle(.blue)
-                Text("finance advicer.")
+        
+        Group {
+            if viewModel.userSession != nil {
+                Text("Hello, User!")
+//                HStack {
+//                    if let user = viewModel.currentUser {
+//                        Text("user name is : \(user.fullName)")
+//                    } else {
+//                        Text("error")
+//                    }
+//                }
+            } else {
+                LoginView()
             }
         }
     }

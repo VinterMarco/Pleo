@@ -1,5 +1,5 @@
 //
-//  RegistrationView.swift
+//  LoginView.swift
 //  Pleo
 //
 //  Created by Vinter Marco on 17.12.2023.
@@ -7,20 +7,16 @@
 
 import SwiftUI
 
-struct RegistrationView: View {
-    @State private var email = ""
-    @State private var fullname = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
+struct LoginView: View {
     
-    @Environment(\.dismiss) private var dismiss
-
+    @State private var email = ""
+    @State private var password = ""
+    @EnvironmentObject var viewModel : AuthViewModel
     
     var body: some View {
+        NavigationStack {
             VStack {
-                
                 // image
-                
                 Image(.pleoBetaLogo2)
                     .resizable()
                     .scaledToFill()
@@ -29,6 +25,7 @@ struct RegistrationView: View {
                     .offset(/*@START_MENU_TOKEN@*/CGSize(width: 10.0, height: 10.0)/*@END_MENU_TOKEN@*/)
                     .offset(y: -25)
                     .padding(.bottom, 6)
+                
                 
                 // form fields
                 
@@ -40,21 +37,9 @@ struct RegistrationView: View {
                     .autocapitalization(.none)
                     
                     InputView(
-                        text: $fullname,
-                        title: "Full Name",
-                        placeholder: "Enter your full name")
-                    
-                    InputView(
                         text: $password,
                         title: "Password",
                         placeholder: "Enter your password",
-                        isSecureField: true)
-                    .autocapitalization(.none)
-                    
-                    InputView(
-                        text: $confirmPassword,
-                        title: "Confirm Password",
-                        placeholder: "Cofirm your password",
                         isSecureField: true)
                     .autocapitalization(.none)
                     
@@ -62,13 +47,16 @@ struct RegistrationView: View {
                 .padding(.horizontal)
                 .padding(.top, 12)
                 
-                // btns
+                
+                // sign in btn
                 
                 Button {
-                    print("Sing user up  ... ")
+                    Task {
+                        try await viewModel.signIn(withEmail: email, password: password)
+                    }
                 } label: {
                     HStack {
-                        Text("SIGN UP")
+                        Text("SIGN IN")
                             .fontWeight(.semibold)
                         Image(systemName: "arrow.right")
                     }
@@ -79,25 +67,26 @@ struct RegistrationView: View {
                 .clipShape(.buttonBorder)
                 .padding(.top, 24)
                 
-                Spacer()
                 
-            }
-            
-            // go back to login view
-            
-            Button {
-                dismiss()
-            } label: {
-                HStack  {
-                    Text("Already have an account ?")
-                    Text("Sign In")
-                        .fontWeight(.bold)
+                Spacer()
+                // sign up btn
+                NavigationLink {
+                    RegistrationView()
+                        .navigationBarBackButtonHidden(true)
+                } label: {
+                    HStack (spacing : 5) {
+                        Text("Don't have an account?")
+                        Text("Sign up")
+                            .fontWeight(.bold)
+                    }
+                    .font(.system(size: 14))
+                    .foregroundColor(.blue)
                 }
-                .font(.system(size: 14))
             }
+        }
     }
 }
 
 #Preview {
-    RegistrationView()
+    LoginView()
 }
