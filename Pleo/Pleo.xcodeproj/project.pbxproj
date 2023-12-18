@@ -41,6 +41,8 @@
 		A11DD3822B2F19CF004C0759 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD3812B2F19CF004C0759 /* ProfileView.swift */; };
 		A11DD3842B2F4C32004C0759 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD3832B2F4C32004C0759 /* AuthViewModel.swift */; };
 		A11DD3862B2F4CF6004C0759 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD3852B2F4CF6004C0759 /* User.swift */; };
+		A11DD38A2B3092A0004C0759 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD3892B3092A0004C0759 /* CustomTabView.swift */; };
+		A11DD38C2B309923004C0759 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD38B2B309923004C0759 /* SettingsRowView.swift */; };
 		A1F55FE12B2DE9B000A4565D /* PleoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F55FE02B2DE9B000A4565D /* PleoApp.swift */; };
 		A1F55FE32B2DE9B000A4565D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F55FE22B2DE9B000A4565D /* ContentView.swift */; };
 		A1F55FE52B2DE9B100A4565D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1F55FE42B2DE9B100A4565D /* Assets.xcassets */; };
@@ -55,6 +57,8 @@
 		A11DD3812B2F19CF004C0759 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A11DD3832B2F4C32004C0759 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AuthViewModel.swift; path = Pleo/Core/Profile/AuthViewModel.swift; sourceTree = SOURCE_ROOT; };
 		A11DD3852B2F4CF6004C0759 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A11DD3892B3092A0004C0759 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		A11DD38B2B309923004C0759 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		A1F55FDD2B2DE9B000A4565D /* Pleo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pleo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1F55FE02B2DE9B000A4565D /* PleoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PleoApp.swift; sourceTree = "<group>"; };
 		A1F55FE22B2DE9B000A4565D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				A11DD37D2B2F0A05004C0759 /* InputView.swift */,
+				A11DD3892B3092A0004C0759 /* CustomTabView.swift */,
+				A11DD38B2B309923004C0759 /* SettingsRowView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -321,10 +327,12 @@
 			files = (
 				A11DD3772B2F0828004C0759 /* LoginView.swift in Sources */,
 				A11DD37E2B2F0A05004C0759 /* InputView.swift in Sources */,
+				A11DD38C2B309923004C0759 /* SettingsRowView.swift in Sources */,
 				A1F55FE32B2DE9B000A4565D /* ContentView.swift in Sources */,
 				A11DD3842B2F4C32004C0759 /* AuthViewModel.swift in Sources */,
 				A11DD3862B2F4CF6004C0759 /* User.swift in Sources */,
 				A1F55FE12B2DE9B000A4565D /* PleoApp.swift in Sources */,
+				A11DD38A2B3092A0004C0759 /* CustomTabView.swift in Sources */,
 				A11DD3822B2F19CF004C0759 /* ProfileView.swift in Sources */,
 				A11DD3802B2F0F65004C0759 /* RegistrationView.swift in Sources */,
 			);

@@ -13,7 +13,7 @@ import Firebase
 @main
 struct PleoApp: App {
     @StateObject var viewModel = AuthViewModel()
-
+    
     init() {
         FirebaseApp.configure()
     }
