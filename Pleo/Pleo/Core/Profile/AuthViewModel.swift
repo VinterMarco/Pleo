@@ -29,6 +29,18 @@ class AuthViewModel : ObservableObject {
     }
     
     
+//    func isEmailUnique(email: String) async throws -> Bool {
+//        let emailsRef = Database.database().reference().child("emails")
+//
+//        return try await withCheckedThrowingContinuation { continuation in
+//            emailsRef.child(email).observeSingleEvent(of: .value) { snapshot in
+//                let isUnique = !snapshot.exists()
+//                continuation.resume(returning: isUnique)
+//            }
+//        }
+//    }
+    
+    
     func createUser(withEmail email : String, password : String, fullname : String) async throws {
         print("User created")
         do {
@@ -39,7 +51,7 @@ class AuthViewModel : ObservableObject {
             try await Firestore.firestore().collection("users").document(user.id).setData(encodeUser)
             await fetchUser()
         } catch {
-            print("DEBUG : Faile to create user with error \(error.localizedDescription)")
+            print("DEBUG : Failed to create user with error \(error.localizedDescription)")
         }
         
     }

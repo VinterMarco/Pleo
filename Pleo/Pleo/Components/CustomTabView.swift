@@ -17,7 +17,7 @@ struct CustomTabView: View {
                 .tabItem {
                     Label("Savings", systemImage: "dollarsign.circle.fill")
                 }
-            Text("Add Expenses")
+            ExpensesView()
                 .tabItem {
                     Label("Add Expenses", systemImage: "plus.circle.fill")
                 }

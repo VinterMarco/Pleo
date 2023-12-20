@@ -26,7 +26,6 @@ struct LoginView: View {
                     .offset(y: -25)
                     .padding(.bottom, 6)
                 
-                
                 // form fields
                 
                 VStack (spacing: 24 ) {
