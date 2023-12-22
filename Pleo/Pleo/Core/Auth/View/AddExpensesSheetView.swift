@@ -14,12 +14,10 @@ struct AddExpensesSheetView: View {
     @State private var description = ""
     @State private var category = "Take Out"
     @State private var date = Date.now
-    
     @Environment(\.dismiss) private var dismiss
-    
     @EnvironmentObject var viewModel : AuthViewModel
     @StateObject private var expenseManager = ExpenseManager()
-
+    
     
     var formattedDate: String {
         let dateFormatter = DateFormatter()
@@ -27,7 +25,10 @@ struct AddExpensesSheetView: View {
         dateFormatter.locale = Locale(identifier: "en_CH") // Set the locale to Switzerland
         return dateFormatter.string(from: date)
     }
-
+    
+    
+   
+    
     
     var categories = ["Take Out","Clothes","Utilities","Car","Other"]
     
@@ -49,13 +50,13 @@ struct AddExpensesSheetView: View {
                             .stroke(Color.gray, lineWidth: 0.6)
                     )
             }
-
-
-
+            
+            
+            
             VStack(alignment: .leading) {
                 Text("Ammount")
                     .font(.footnote)
-                TextField("Ammount", value: $ammount, format: .currency(code: "USD"))
+                TextField("Ammount", value: $ammount, format: .currency(code: "RON"))
                     .frame(width: UIScreen.main.bounds.width - 60, height: 30)
                     .padding(8)
                     .overlay(
@@ -85,8 +86,8 @@ struct AddExpensesSheetView: View {
                         .stroke(Color.gray, lineWidth: 0.6)
                 )
             }
-
-
+            
+            
             VStack(alignment: .leading) {
                 Text("Date")
                     .font(.footnote)
@@ -108,13 +109,13 @@ struct AddExpensesSheetView: View {
                             RoundedRectangle(cornerRadius: 6)
                                 .stroke(Color.gray, lineWidth: 0.6)
                         )
-                 
+                    
                     
                 }
                 .offset(y : 5)
                 .frame(width: UIScreen.main.bounds.width - 60, height: 30)
             }
-
+            
             Button {
                 print("Expense Name : \(name)")
                 print("Description : \(description)")
@@ -123,6 +124,8 @@ struct AddExpensesSheetView: View {
                 print("Date : \(date)")
                 let newExpense = Expense(title: name, amount: Double(ammount), description: "N/A Feature", category: category, date: date, userId: viewModel.currentUser?.id ?? "unasigned to a user")
                 expenseManager.addExpense(newExpense)
+                
+                expenseManager.getExpensesForCurrentDay()
                 dismiss()
             } label: {
                 Text("Add expense")
@@ -134,7 +137,7 @@ struct AddExpensesSheetView: View {
                     .background(.blue)
                     .clipShape(.buttonBorder)
                     .offset(y : 20)
-
+                
             }
         }
     }

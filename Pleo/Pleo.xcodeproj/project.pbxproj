@@ -44,6 +44,7 @@
 		A11DD38A2B3092A0004C0759 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD3892B3092A0004C0759 /* CustomTabView.swift */; };
 		A11DD38C2B309923004C0759 /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD38B2B309923004C0759 /* SettingsRowView.swift */; };
 		A11DD38E2B30D212004C0759 /* Expenses.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11DD38D2B30D212004C0759 /* Expenses.swift */; };
+		A147F1FF2B3592FF00918DF3 /* ExpensesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */; };
 		A19027342B322BD600375B6E /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19027332B322BD600375B6E /* ExpensesView.swift */; };
 		A19027362B331AE600375B6E /* AddExpensesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19027352B331AE600375B6E /* AddExpensesSheetView.swift */; };
 		A190273A2B333D2D00375B6E /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19027392B333D2D00375B6E /* ExpensesViewModel.swift */; };
@@ -64,6 +65,7 @@
 		A11DD3892B3092A0004C0759 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
 		A11DD38B2B309923004C0759 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		A11DD38D2B30D212004C0759 /* Expenses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expenses.swift; sourceTree = "<group>"; };
+		A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesListView.swift; sourceTree = "<group>"; };
 		A19027332B322BD600375B6E /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 		A19027352B331AE600375B6E /* AddExpensesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpensesSheetView.swift; sourceTree = "<group>"; };
 		A19027392B333D2D00375B6E /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExpensesViewModel.swift; path = Pleo/Core/Auth/View/ExpensesViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -139,6 +141,7 @@
 				A11DD3762B2F0828004C0759 /* LoginView.swift */,
 				A11DD37F2B2F0F65004C0759 /* RegistrationView.swift */,
 				A19027352B331AE600375B6E /* AddExpensesSheetView.swift */,
+				A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				A11DD3772B2F0828004C0759 /* LoginView.swift in Sources */,
 				A11DD37E2B2F0A05004C0759 /* InputView.swift in Sources */,
 				A11DD38C2B309923004C0759 /* SettingsRowView.swift in Sources */,
+				A147F1FF2B3592FF00918DF3 /* ExpensesListView.swift in Sources */,
 				A1F55FE32B2DE9B000A4565D /* ContentView.swift in Sources */,
 				A11DD3842B2F4C32004C0759 /* AuthViewModel.swift in Sources */,
 				A19027362B331AE600375B6E /* AddExpensesSheetView.swift in Sources */,

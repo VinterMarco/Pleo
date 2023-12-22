@@ -4,27 +4,28 @@ import SwiftUI
 
 struct ExpenseItemView: View {
     let title: String
-    let amount: String
+    let amount: Double
     let colorOfLabel : Color
     let labelImage : String
-
+    
+    
     var body: some View {
         HStack(spacing : 10) {
             VStack {
                 Circle()
                     .fill(colorOfLabel)
-                           .frame(width: 40, height: 40) // Adjust the size as needed
-                           .overlay(
-                               Circle().stroke(Color.white, lineWidth: 1)
-                           )
-                           .overlay(
-                               Image(systemName: labelImage) // System image for take-out food
-                                   .resizable()
-                                   .foregroundStyle(.white)
-                                   .aspectRatio(contentMode: .fit)
-                                   .frame(width: 16, height: 24) // Adjust the size as needed
-                           )
-                   }
+                    .frame(width: 40, height: 40) // Adjust the size as needed
+                    .overlay(
+                        Circle().stroke(Color.white, lineWidth: 1)
+                    )
+                    .overlay(
+                        Image(systemName: labelImage) // System image for take-out food
+                            .resizable()
+                            .foregroundStyle(.white)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 16, height: 24) // Adjust the size as needed
+                    )
+            }
             VStack {
                 Text(title)
                     .bold()
@@ -32,7 +33,7 @@ struct ExpenseItemView: View {
             }
             Spacer()
             VStack {
-                Text(amount)
+                Text("\(amount.formatted(.currency(code: "RON")))")
                     .foregroundStyle(.blue)
                     .bold()
             }
@@ -48,12 +49,23 @@ struct ExpenseItemView: View {
 
 struct ExpensesView: View {
     
- 
-
+    
+    
     
     @State private var date = Date.now
     @State private var isDatePickerVisible = false
     @State private var addExpenseIsVisible = false
+    @ObservedObject var expenseManager = ExpenseManager()
+    @State private var expensesByMonth: [Expense] = []
+    
+    @State  var allExpensesSumState = 0.0
+    @State  var availableBudget = 15000.0
+    @State  var moneySpentToday = 0.0
+    
+    
+    
+    
+    
     
     var formattedDate: String {
         let dateFormatter = DateFormatter()
@@ -61,6 +73,80 @@ struct ExpensesView: View {
         dateFormatter.locale = Locale(identifier: "en_CH") // Set the locale to Switzerland
         return dateFormatter.string(from: date)
     }
+    
+    
+    
+    
+    func groupExpensesByCategory(expenses: [Pleo.Expense]) -> [String: [Pleo.Expense]] {
+        var groupedExpenses = [String: [Pleo.Expense]]()
+
+        for expense in expenses {
+            let category = expense.category
+            if var categoryExpenses = groupedExpenses[category] {
+                categoryExpenses.append(expense)
+                groupedExpenses[category] = categoryExpenses
+            } else {
+                groupedExpenses[category] = [expense]
+            }
+        }
+        return groupedExpenses
+    }
+    
+    
+    
+    
+
+    // Function to calculate the sum of expenses for each category with color and string
+    func getCategorySum(expenses: [Pleo.Expense]) -> [(category: String, sum: Double, color: Color, icon: String, entries: [Pleo.Expense])] {
+        let groupedExpenses = groupExpensesByCategory(expenses: expenses)
+        var categorySums = [(category: String, sum: Double, color: Color, icon: String, entries: [Pleo.Expense])]()
+        for (category, categoryExpenses) in groupedExpenses {
+            let sum = categoryExpenses.reduce(0.0) { $0 + $1.amount }
+            let colorAndIcon = getColorAndIcon(for: category)
+            categorySums.append((category: category, sum: sum, color: colorAndIcon.color, icon: colorAndIcon.icon, entries: categoryExpenses))
+        }
+        var allExpensesSum = 0.0
+        for categorySum in categorySums {
+            allExpensesSum += categorySum.sum
+        }
+        allExpensesSumState = allExpensesSum
+        return categorySums
+    }
+    
+    
+    // Function to calculate the sum of expenses for each category with color and string
+    func getCategorySumForCurrentDay() {
+        var expensesForToday = expenseManager.currentDayExpenses
+        print(expensesForToday)
+        moneySpentToday = 0
+        for expense in expensesForToday {
+            print(expense.amount)
+            moneySpentToday += expense.amount
+        }
+   }
+
+    
+    // Function to get color and icon for a given category
+    func getColorAndIcon(for category: String) -> (color: Color, icon: String) {
+        switch category.lowercased() {
+        case "take out":
+            return (color: .green, icon: "bag.fill")
+        case "clothes":
+            return (color: .yellow, icon: "tag.circle.fill")
+        case "utilities":
+            return (color: .blue, icon: "house.fill")
+        case "car":
+            return (color: .purple, icon: "car.fill")
+        default:
+            return (color: .pink, icon: "ellipsis.circle.fill")
+        }
+    }
+
+
+    
+    
+    
+    
     
     var body: some View {
         NavigationStack {
@@ -91,7 +177,6 @@ struct ExpensesView: View {
                             .datePickerStyle(.compact) // Use custom MonthPickerStyle
                             .fontDesign(.monospaced) // Customize the font
                             .frame(width: 30)
-//                            .background(.red)
                             .opacity(0.03)
                             
                         }
@@ -101,17 +186,17 @@ struct ExpensesView: View {
                         
                         VStack(alignment: .leading, spacing: -6) {
                             Text("Total")
-                                .font(.system(size: 19))
+                                .font(.system(size: 22))
                                 .bold()
                             
-                            HStack(spacing: geometry.size.width < 600 ? 150 : 140) {
-                                Text("$5,020")
-                                    .font(.system(size: geometry.size.width < 600 ? 30 : 34).bold())
+                            HStack(spacing: geometry.size.width < 600 ? 100 : 110) {
+                                Text("\((availableBudget - allExpensesSumState).formatted(.currency(code: "RON")))")
+                                    .font(.system(size: geometry.size.width < 600 ? 23 : 36).bold())
                                     .foregroundStyle(.blue)
                                 
                                 Button {
-                                    // Handle button action
                                     addExpenseIsVisible.toggle()
+                                    
                                 } label: {
                                     Image(systemName: "plus")
                                         .padding(20)
@@ -128,10 +213,9 @@ struct ExpensesView: View {
                                 }
                                 
                             }
-                            
-                            Text("-$254 today")
+                            Text("-\(moneySpentToday.formatted(.currency(code: "RON"))) today")
                                 .foregroundColor(.red)
-                                .font(.system(size: geometry.size.width < 600 ? 14 : 15))
+                                .font(.system(size: geometry.size.width < 600 ? 15 : 15))
                         }
                         .padding()
                         .frame(width: geometry.size.width - 32)
@@ -139,15 +223,18 @@ struct ExpensesView: View {
                         .cornerRadius(20)
                         
                         VStack(spacing: geometry.size.width < 600 ? 10 : 20) {
-                            NavigationLink {
-                                Text("Text")
-                            } label: {
-                                ExpenseItemView(title: "Take Out", amount: "$2,103", colorOfLabel: Color.green, labelImage: "bag")
+                            ForEach(getCategorySum(expenses: expenseManager.expenses ), id: \.category) { categorySum in
+                                NavigationLink {
+                                    ForEach(categorySum.entries) { expensesData in
+                                        ExpensesListView(expensesList: [expensesData])
+                                    }
+                                } label: {
+                                    ExpenseItemView(title: categorySum.category, amount: categorySum.sum, colorOfLabel: categorySum.color, labelImage: categorySum.icon)
+
+                                }
                             }
-                            ExpenseItemView(title: "Clothes", amount: "$2,103", colorOfLabel: Color.yellow, labelImage: "tag.circle.fill")
-                            ExpenseItemView(title: "Utilities", amount: "$2,300", colorOfLabel: Color.purple, labelImage: "house")
-                            ExpenseItemView(title: "Car", amount: "$1,2300", colorOfLabel: Color.blue, labelImage: "car")
-                            ExpenseItemView(title: "Other", amount: "$1,2300", colorOfLabel: Color.pink, labelImage: "ellipsis.circle.fill")
+
+                            
                         }
                         .frame(height: 450)
                         .background(.clear)
@@ -156,12 +243,19 @@ struct ExpensesView: View {
                     .frame(width: geometry.size.width - 32, height: geometry.size.height - 150)
                 }
             }
+            .onAppear {
+                expenseManager.getExpensesByMonth(forMonth: 12, year: 2023)
+                getCategorySumForCurrentDay()
+//                groupExpensesByCategory(expenses: expenseManager.expenses)
+               
+                
+            }
             .navigationTitle("Expenses")
             .navigationBarTitleDisplayMode(.large)
             .navigationBarHidden(true)
-
             
-
+            
+            
         }
     }
 }
