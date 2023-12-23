@@ -49,11 +49,11 @@ struct ExpensesListVassel : View {
                                 .foregroundColor(.white)
                             VStack(alignment:.leading) {
                                 Text(title)
-                                    .font(.system(size: 24.4))
+                                    .font(.system(size: 23.4))
                                     .foregroundStyle(.white)
                                     .bold()
                                 Text("\(date.formatted(date: .numeric, time: .shortened))")
-                                    .font(.system(size: 13))
+                                    .font(.system(size: 12))
                                     .foregroundStyle(.white)
         
                             }
@@ -61,7 +61,7 @@ struct ExpensesListVassel : View {
                         Spacer()
                         Text("\(amount.formatted(.currency(code: "RON")))")
                             .foregroundColor(.white)
-                            .font(.system(size: 20))
+                            .font(.system(size: 17))
                             .padding(6)
                             .bold()
                             .cornerRadius(10)
@@ -93,13 +93,20 @@ struct ExpensesListView: View {
     // Initializer with internal access level
     init(expensesList: [Pleo.Expense]) {
         _expensesList = State(initialValue: expensesList)
+        print(expensesList)
     }
     
     var body: some View {
+        ScrollView {
+            VStack {
+                ForEach(expensesList) { expense in
+                    ExpensesListVassel(title: expense.title, date: expense.date, amount: expense.amount, category: expense.category)
+                    
+                }
+            }
+            .navigationTitle(expensesList[0].category)
+            .navigationBarTitleDisplayMode(.inline)
         
-        ForEach(expensesList) { expense in
-            ExpensesListVassel(title: expense.title, date: expense.date, amount: expense.amount, category: expense.category)
-            
         }
     }
 }

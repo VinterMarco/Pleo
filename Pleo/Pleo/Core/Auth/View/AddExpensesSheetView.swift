@@ -124,7 +124,6 @@ struct AddExpensesSheetView: View {
                 print("Date : \(date)")
                 let newExpense = Expense(title: name, amount: Double(ammount), description: "N/A Feature", category: category, date: date, userId: viewModel.currentUser?.id ?? "unasigned to a user")
                 expenseManager.addExpense(newExpense)
-                
                 expenseManager.getExpensesForCurrentDay()
                 dismiss()
             } label: {

@@ -93,6 +93,17 @@ struct ExpensesView: View {
     }
     
     
+    func getYear(from date: Date) -> Int {
+         let calendar = Calendar.current
+         let year = calendar.component(.year, from: date)
+         return year
+     }
+
+     func getMonth(from date: Date) -> Int {
+         let calendar = Calendar.current
+         let month = calendar.component(.month, from: date)
+         return month
+     }
     
     
 
@@ -105,22 +116,30 @@ struct ExpensesView: View {
             let colorAndIcon = getColorAndIcon(for: category)
             categorySums.append((category: category, sum: sum, color: colorAndIcon.color, icon: colorAndIcon.icon, entries: categoryExpenses))
         }
+        
+        print("0-------------- entries ----------------0")
+        for i in categorySums {
+            print(i.entries)
+        }
+        print("0---------------- entries --------------0")
+        
         var allExpensesSum = 0.0
         for categorySum in categorySums {
             allExpensesSum += categorySum.sum
+            
         }
         allExpensesSumState = allExpensesSum
+
         return categorySums
     }
     
     
     // Function to calculate the sum of expenses for each category with color and string
     func getCategorySumForCurrentDay() {
-        var expensesForToday = expenseManager.currentDayExpenses
+        let expensesForToday = expenseManager.currentDayExpenses
         print(expensesForToday)
         moneySpentToday = 0
         for expense in expensesForToday {
-            print(expense.amount)
             moneySpentToday += expense.amount
         }
    }
@@ -178,6 +197,12 @@ struct ExpensesView: View {
                             .fontDesign(.monospaced) // Customize the font
                             .frame(width: 30)
                             .opacity(0.03)
+                            .onChange(of: date, perform: { newDate in
+                                let year = getYear(from: newDate)
+                                let month = getMonth(from: newDate)
+                                print("Selected Year: \(year), Month: \(month)")
+                                expenseManager.getExpensesByMonth(forMonth: month, year: year)
+                            })
                             
                         }
                         Text("Expenses")
@@ -210,6 +235,9 @@ struct ExpensesView: View {
                                 .sheet(isPresented: $addExpenseIsVisible) {
                                     AddExpensesSheetView()
                                         .presentationDetents([.fraction(0.90)])
+                                        .onDisappear {
+                                                 getCategorySumForCurrentDay()
+                                             }
                                 }
                                 
                             }
@@ -225,9 +253,7 @@ struct ExpensesView: View {
                         VStack(spacing: geometry.size.width < 600 ? 10 : 20) {
                             ForEach(getCategorySum(expenses: expenseManager.expenses ), id: \.category) { categorySum in
                                 NavigationLink {
-                                    ForEach(categorySum.entries) { expensesData in
-                                        ExpensesListView(expensesList: [expensesData])
-                                    }
+                                        ExpensesListView(expensesList: categorySum.entries)
                                 } label: {
                                     ExpenseItemView(title: categorySum.category, amount: categorySum.sum, colorOfLabel: categorySum.color, labelImage: categorySum.icon)
 
@@ -246,8 +272,6 @@ struct ExpensesView: View {
             .onAppear {
                 expenseManager.getExpensesByMonth(forMonth: 12, year: 2023)
                 getCategorySumForCurrentDay()
-//                groupExpensesByCategory(expenses: expenseManager.expenses)
-               
                 
             }
             .navigationTitle("Expenses")
