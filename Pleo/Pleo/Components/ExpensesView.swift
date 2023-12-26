@@ -62,8 +62,19 @@ struct ExpensesView: View {
     @State  var availableBudget = 15000.0
     @State  var moneySpentToday = 0.0
     
+    var selectedYear : Int {
+        let currentDate = date
+        let calendar = Calendar.current
+        return calendar.component(.year, from: currentDate)
+    }
+    var selectedMonth : Int {
+        let currentDate = date
+        let calendar = Calendar.current
+        return calendar.component(.month, from: currentDate)
+    }
     
     
+ 
     
     
     
@@ -116,20 +127,12 @@ struct ExpensesView: View {
             let colorAndIcon = getColorAndIcon(for: category)
             categorySums.append((category: category, sum: sum, color: colorAndIcon.color, icon: colorAndIcon.icon, entries: categoryExpenses))
         }
-        
-        print("0-------------- entries ----------------0")
-        for i in categorySums {
-            print(i.entries)
-        }
-        print("0---------------- entries --------------0")
-        
         var allExpensesSum = 0.0
         for categorySum in categorySums {
             allExpensesSum += categorySum.sum
             
         }
         allExpensesSumState = allExpensesSum
-
         return categorySums
     }
     
@@ -137,7 +140,6 @@ struct ExpensesView: View {
     // Function to calculate the sum of expenses for each category with color and string
     func getCategorySumForCurrentDay() {
         let expensesForToday = expenseManager.currentDayExpenses
-        print(expensesForToday)
         moneySpentToday = 0
         for expense in expensesForToday {
             moneySpentToday += expense.amount
@@ -200,7 +202,7 @@ struct ExpensesView: View {
                             .onChange(of: date, perform: { newDate in
                                 let year = getYear(from: newDate)
                                 let month = getMonth(from: newDate)
-                                print("Selected Year: \(year), Month: \(month)")
+//                                print("Selected Year: \(year), Month: \(month)")
                                 expenseManager.getExpensesByMonth(forMonth: month, year: year)
                             })
                             
@@ -257,6 +259,7 @@ struct ExpensesView: View {
                                 } label: {
                                     ExpenseItemView(title: categorySum.category, amount: categorySum.sum, colorOfLabel: categorySum.color, labelImage: categorySum.icon)
 
+
                                 }
                             }
 
@@ -270,7 +273,9 @@ struct ExpensesView: View {
                 }
             }
             .onAppear {
-                expenseManager.getExpensesByMonth(forMonth: 12, year: 2023)
+//                print(selectedYear)
+//                print(selectedMonth)
+                expenseManager.getExpensesByMonth(forMonth: self.selectedMonth, year: self.selectedYear)
                 getCategorySumForCurrentDay()
                 
             }

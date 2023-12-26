@@ -21,7 +21,7 @@ struct CustomTabView: View {
                 .tabItem {
                     Label("Add Expenses", systemImage: "plus.circle.fill")
                 }
-            Text("Analytics")
+            AnalyticsView()
                 .tabItem {
                     Label("Analytics", systemImage: "chart.bar.fill")
                 }

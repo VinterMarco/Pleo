@@ -82,7 +82,7 @@ class ExpenseManager: ObservableObject {
               .whereField("date", isLessThan: endDate)
               .addSnapshotListener { querySnapshot, error in
                   guard let documents = querySnapshot?.documents else {
-                      print("Error fetching documents: \(error ?? NSError())")
+//                      print("Error fetching documents: \(error ?? NSError())")
                       return
                   }
 
@@ -90,7 +90,7 @@ class ExpenseManager: ObservableObject {
                       do {
                           return try document.data(as: Expense.self)
                       } catch {
-                          print("Error decoding expense: \(error)")
+//                          print("Error decoding expense: \(error)")
                           return nil
                       }
                   }
