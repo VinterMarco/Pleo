@@ -28,11 +28,11 @@ struct Expense : Identifiable, Codable {
 
 extension Expense {
     static var MOCK_EXPENSE = Expense(
-        title: "Title",
-        amount: 22.5,
+        title: "",
+        amount: 0,
         description: "",
-        category: "car",
+        category: "Car",
         date: Date.now,
-        userId: "not found")
+        userId: "")
 }
 

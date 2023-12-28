@@ -16,6 +16,13 @@ struct ToyShape: Identifiable {
 }
 
 struct ChartsView: View {
+
+
+    var week1 = 0
+    var week2 = 0
+    var week3 = 0
+    var week4 = 0
+    var spendingGoal = 7500
     
     var data: [ToyShape] = [
         .init(type: "1st Week", count: 5, color: Color.green),
@@ -28,18 +35,37 @@ struct ChartsView: View {
     var body: some View {
         VStack {
             Chart {
-                ForEach(data) { datum in
-                    BarMark (
-                        x: .value("Shape Type", datum.type),
-                        y: .value("Total Count", datum.count)
+          
+                BarMark (
+                        x: .value("week", "1st Week"),
+                        y: .value("Total Count", week1)
                     )
-                }
+                .foregroundStyle(week1 < spendingGoal ? .green : .red)
+                BarMark (
+                    x: .value("week", "2nd Week"),
+                    y: .value("Total Count", week2)
+                )
+                .foregroundStyle(week2 < spendingGoal ? .green : .red)
+                BarMark (
+                    x: .value("week", "3rd Week"),
+                    y: .value("Total Count", week3)
+                )
+                .foregroundStyle(week3 < spendingGoal ? .green : .red)
+                BarMark (
+                    x: .value("week", "4th Week"),
+                    y: .value("Total Count", week4)
+                )
+                .foregroundStyle(week4 < spendingGoal ? .green : .red)
+                RuleMark (y : .value("Goal", 7500))
+                    .foregroundStyle(Color.mint)
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
             }
         }
         .padding()
         .background(.white)
         .cornerRadius(10)
         .shadow(color: .gray, radius: 3)
+ 
         
     }
 }

@@ -56,7 +56,6 @@ struct ExpensesView: View {
     @State private var isDatePickerVisible = false
     @State private var addExpenseIsVisible = false
     @ObservedObject var expenseManager = ExpenseManager()
-    @State private var expensesByMonth: [Expense] = []
     
     @State  var allExpensesSumState = 0.0
     @State  var availableBudget = 15000.0
@@ -253,7 +252,7 @@ struct ExpensesView: View {
                         .cornerRadius(20)
                         
                         VStack(spacing: geometry.size.width < 600 ? 10 : 20) {
-                            ForEach(getCategorySum(expenses: expenseManager.expenses ), id: \.category) { categorySum in
+                            ForEach(getCategorySum(expenses: expenseManager.currentMontExpenses ), id: \.category) { categorySum in
                                 NavigationLink {
                                         ExpensesListView(expensesList: categorySum.entries)
                                 } label: {

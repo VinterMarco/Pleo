@@ -16,12 +16,27 @@ struct AnalyticsView: View {
     @State private var date : Date = Date.now
     @State  var allExpensesSumState = 0.0
     @State  var highestExpenseStateVar = 0.0
+    @State var highestDateForSending: Date = Date.now
+    @State var maxDate: Date?
+    @State var maxTotal: Double = 0.0
+    @State var minDate: Date?
+    @State var minTotal: Double = 111111111111.0
+    
+    @State  var firstWeekExpenses = [Pleo.Expense]()
+    @State  var sumWeek1 = 0
+    @State  var secondWeekExpenses = [Pleo.Expense]()
+    @State  var sumWeek2 = 0
+    @State var thirdWeekExpenses = [Pleo.Expense]()
+    @State  var sumWeek3 = 0
+    @State var fourthWeekExpenses = [Pleo.Expense]()
+    @State  var sumWeek4 = 0
 
+    
     
     // set them by category
     func groupExpensesByCategory(expenses: [Pleo.Expense]) -> [String: [Pleo.Expense]] {
         var groupedExpenses = [String: [Pleo.Expense]]()
-
+        
         for expense in expenses {
             let category = expense.category
             if var categoryExpenses = groupedExpenses[category] {
@@ -33,33 +48,136 @@ struct AnalyticsView: View {
         }
         return groupedExpenses
     }
-
+    
+    
+     func groupExpensesInFourWeeksInAMonth () {
+         firstWeekExpenses = []
+         secondWeekExpenses = []
+         thirdWeekExpenses = []
+         fourthWeekExpenses = []
+        
+        for exepenses in expenseManager.currentMontExpenses {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let extractedDate = dateFormatter.string(from: exepenses.date)
+            if let date = dateFormatter.date(from: extractedDate) {
+                let calendar = Calendar.current
+                let dayOfMonth = calendar.component(.day, from: date)
+                let strToNumb = Int(dayOfMonth)
+                switch strToNumb {
+                case 1...7:
+                    firstWeekExpenses.append(exepenses)
+                case 8...14:
+                    secondWeekExpenses.append(exepenses)
+                case 15...21:
+                    thirdWeekExpenses.append(exepenses)
+                case 22...31:
+                    fourthWeekExpenses.append(exepenses)
+                default:
+                    break
+                }
+            } else {
+//                print("Invalid date string")
+            }
+            
+        }
+        print("1")
+        print(firstWeekExpenses)
+        print(type(of: firstWeekExpenses))
+         
+         
+         for week1Iterator in firstWeekExpenses {
+             sumWeek1 += Int(week1Iterator.amount)
+         }
+         for week2Iterator in secondWeekExpenses {
+             sumWeek2 += Int(week2Iterator.amount)
+         }
+         for week3Iterator in thirdWeekExpenses {
+             sumWeek3 += Int(week3Iterator.amount)
+         }
+         for week4Iterator in fourthWeekExpenses {
+             sumWeek4 += Int(week4Iterator.amount)
+         }
+         
+         
+         print(sumWeek1)
+         print(sumWeek2)
+         print(sumWeek3)
+         print(sumWeek4)
+//        print("2")
+//        print(secondWeekExpenses)
+//        print("3")
+//        print(thirdWeekExpenses)
+//        print("4")
+//        print(fourthWeekExpenses)
+    }
+    
     
     // highest expense
-    
     func getHighestExpense() {
         var highestExense = -2000000.0
-        print(expenseManager.expenses)
-        
-        var currentMonthExpenses = expenseManager.expenses
-
+        var highestDate = Date.now
+        var currentMonthExpenses = expenseManager.currentMontExpenses
         for expense in currentMonthExpenses {
             if expense.amount > highestExense {
-//                print(expense.amount)
                 highestExense = expense.amount
+                highestDateForSending = expense.date
             }
         }
         highestExpenseStateVar = highestExense
-        print("Amount : \(highestExense)")
+        if highestExpenseStateVar  == -2000000.0 {
+            highestExpenseStateVar = 0
+        }
     }
     
     
     // highest day expense
-    
     func highestDayExpense() {
-        
+        var dailyTotal: [Date: Double] = [:]
+        // Iterate through expenses and update the daily total
+        for expense in expenseManager.currentMontExpenses {
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year, .month, .day], from: expense.date)
+            let dateOnly = calendar.date(from: components)!
+            
+            if let existingTotal = dailyTotal[dateOnly] {
+                dailyTotal[dateOnly] = existingTotal + expense.amount
+            } else {
+                dailyTotal[dateOnly] = expense.amount
+            }
+            
+            // Update maxDate and maxTotal if needed
+            if let total = dailyTotal[dateOnly], total > maxTotal {
+                maxTotal = total
+                maxDate = dateOnly
+            }
+        }
     }
     
+    // Lowest day expense
+    func lowestDayExpense() {
+        var dailyTotal: [Date: Double] = [:]
+        
+        
+        // Iterate through expenses and update the daily total
+        for expense in expenseManager.currentMontExpenses {
+            let calendar = Calendar.current
+            let components = calendar.dateComponents([.year, .month, .day], from: expense.date)
+            let dateOnly = calendar.date(from: components)!
+            
+            if let existingTotal = dailyTotal[dateOnly] {
+                dailyTotal[dateOnly] = existingTotal + expense.amount
+            } else {
+                dailyTotal[dateOnly] = expense.amount
+            }
+            
+            // Update minDate and minTotal if needed
+            if let total = dailyTotal[dateOnly], total < minTotal {
+                minTotal = total
+                minDate = dateOnly
+            }
+        }
+    }
     
     // sum the category
     func getCategorySum(expenses: [Pleo.Expense]) -> [(category: String, sum: Double, color: Color, icon: String, entries: [Pleo.Expense])] {
@@ -79,7 +197,7 @@ struct AnalyticsView: View {
         return categorySums
     }
     
-    // give color 
+    // give color
     func getColorAndIcon(for category: String) -> (color: Color, icon: String) {
         switch category.lowercased() {
         case "take out":
@@ -123,8 +241,8 @@ struct AnalyticsView: View {
                             DatePicker (
                                 "", selection: $date, displayedComponents: .date
                             )
-                            .datePickerStyle(.compact) // Use custom MonthPickerStyle
-                            .fontDesign(.monospaced) // Customize the font
+                            .datePickerStyle(.compact)
+                            .fontDesign(.monospaced)
                             .frame(width: 30)
                             .opacity(0.03)
                             
@@ -136,10 +254,15 @@ struct AnalyticsView: View {
                         
                         VStack(alignment: .leading, spacing: 6) {
                             VStack (spacing : 30) {
-                                ChartsView()
+                                ChartsView(
+                                    week1: sumWeek1,
+                                    week2: sumWeek2,
+                                    week3: sumWeek3,
+                                    week4: sumWeek4
+                                )
                                     .frame(height: 200)
                                 HStack {
-                                    PieChartView(expensesByCategory: getCategorySum(expenses: expenseManager.expenses))
+                                    PieChartView(expensesByCategory: getCategorySum(expenses: expenseManager.currentMontExpenses))
                                         .frame(height: 200)
                                     
                                 }
@@ -149,16 +272,24 @@ struct AnalyticsView: View {
                         .padding(5)
                         .frame(width: geometry.size.width - 32)
                         .cornerRadius(20)
-                        MainExpensesView(highestExpense: highestExpenseStateVar)
-                        
-                        
+                        MainExpensesView(
+                            highestExpense: highestExpenseStateVar,
+                            highestExpenseDate: highestDateForSending, highestDay: maxDate ?? Date.now ,
+                            lowestDay : minDate ?? Date.now ,
+                            maxTotal: Int(maxTotal),
+                            minTotal: Double(Int(minTotal))
+                            
+                        )
                     }
                     .frame(width: geometry.size.width - 32, height: geometry.size.height - 150)
                 }
                 .onAppear {
                     expenseManager.getExpensesByMonth(forMonth: 12, year: 2023)
                     getHighestExpense()
-
+                    lowestDayExpense()
+                    highestDayExpense()
+                    groupExpensesInFourWeeksInAMonth()
+                    
                 }
             }
         }

@@ -6,6 +6,7 @@ import Combine
 class ExpenseManager: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     @Published var expenses: [Expense] = []
+    @Published var currentMontExpenses: [Expense] = []
     @Published var currentDayExpenses: [Expense] = []
     private var db = Firestore.firestore()
     
@@ -18,7 +19,7 @@ class ExpenseManager: ObservableObject {
         do {
             let _ = try db.collection("expenses").addDocument(from: expense)
         } catch {
-            print("Error adding expense: \(error)")
+//            print("Error adding expense: \(error)")
         }
     }
     
@@ -28,7 +29,7 @@ class ExpenseManager: ObservableObject {
         db.collection("expenses")
             .addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(error ?? NSError())")
+//                    print("Error fetching documents: \(error ?? NSError())")
                     return
                 }
                 
@@ -36,7 +37,7 @@ class ExpenseManager: ObservableObject {
                     do {
                         return try document.data(as: Expense.self)
                     } catch {
-                        print("Error decoding expense: \(error)")
+//                        print("Error decoding expense: \(error)")
                         return nil
                     }
                 }
@@ -54,7 +55,7 @@ class ExpenseManager: ObservableObject {
             .whereField("date", isLessThan: endOfDay)
             .addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error fetching documents: \(error ?? NSError())")
+//                    print("Error fetching documents: \(error ?? NSError())")
                     return
                 }
 
@@ -62,7 +63,7 @@ class ExpenseManager: ObservableObject {
                     do {
                         return try document.data(as: Expense.self)
                     } catch {
-                        print("Error decoding expense: \(error)")
+//                        print("Error decoding expense: \(error)")
                         return nil
                     }
                 }
@@ -86,7 +87,7 @@ class ExpenseManager: ObservableObject {
                       return
                   }
 
-                  self.expenses = documents.compactMap { document in
+                  self.currentMontExpenses = documents.compactMap { document in
                       do {
                           return try document.data(as: Expense.self)
                       } catch {
