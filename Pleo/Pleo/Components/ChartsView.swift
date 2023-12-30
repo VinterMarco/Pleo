@@ -24,6 +24,8 @@ struct ChartsView: View {
     var week4 = 0
     var spendingGoal = 7500
     
+    
+    
     var data: [ToyShape] = [
         .init(type: "1st Week", count: 5, color: Color.green),
         .init(type: "2nd Week", count: 4, color: Color.red),

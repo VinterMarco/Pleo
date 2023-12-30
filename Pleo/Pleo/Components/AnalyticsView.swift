@@ -18,9 +18,9 @@ struct AnalyticsView: View {
     @State  var highestExpenseStateVar = 0.0
     @State var highestDateForSending: Date = Date.now
     @State var maxDate: Date?
-    @State var maxTotal: Double = 0.0
+    @State var maxTotal: Double = -9223372036854775808.0
     @State var minDate: Date?
-    @State var minTotal: Double = 111111111111.0
+    @State var minTotal: Double = 2_147_483_647.0
     
     @State  var firstWeekExpenses = [Pleo.Expense]()
     @State  var sumWeek1 = 0
@@ -30,8 +30,40 @@ struct AnalyticsView: View {
     @State  var sumWeek3 = 0
     @State var fourthWeekExpenses = [Pleo.Expense]()
     @State  var sumWeek4 = 0
-
     
+    
+    
+    
+    var formattedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM, yyyy" // Format as "Nov, 2023"
+        dateFormatter.locale = Locale(identifier: "en_CH") // Set the locale to Switzerland
+        return dateFormatter.string(from: date)
+    }
+    
+    var selectedYear : Int {
+        let currentDate = date
+        let calendar = Calendar.current
+        return calendar.component(.year, from: currentDate)
+    }
+    var selectedMonth : Int {
+        let currentDate = date
+        let calendar = Calendar.current
+        return calendar.component(.month, from: currentDate)
+    }
+    
+    
+    func getYear(from date: Date) -> Int {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        return year
+    }
+    
+    func getMonth(from date: Date) -> Int {
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        return month
+    }
     
     // set them by category
     func groupExpensesByCategory(expenses: [Pleo.Expense]) -> [String: [Pleo.Expense]] {
@@ -50,11 +82,15 @@ struct AnalyticsView: View {
     }
     
     
-     func groupExpensesInFourWeeksInAMonth () {
-         firstWeekExpenses = []
-         secondWeekExpenses = []
-         thirdWeekExpenses = []
-         fourthWeekExpenses = []
+    func groupExpensesInFourWeeksInAMonth () {
+        firstWeekExpenses = []
+        secondWeekExpenses = []
+        thirdWeekExpenses = []
+        fourthWeekExpenses = []
+        sumWeek1 = 0
+        sumWeek2 = 0
+        sumWeek3 = 0
+        sumWeek4 = 0
         
         for exepenses in expenseManager.currentMontExpenses {
             let dateFormatter = DateFormatter()
@@ -77,46 +113,34 @@ struct AnalyticsView: View {
                     break
                 }
             } else {
-//                print("Invalid date string")
+                //                print("Invalid date string")
             }
             
         }
-        print("1")
-        print(firstWeekExpenses)
-        print(type(of: firstWeekExpenses))
-         
-         
-         for week1Iterator in firstWeekExpenses {
-             sumWeek1 += Int(week1Iterator.amount)
-         }
-         for week2Iterator in secondWeekExpenses {
-             sumWeek2 += Int(week2Iterator.amount)
-         }
-         for week3Iterator in thirdWeekExpenses {
-             sumWeek3 += Int(week3Iterator.amount)
-         }
-         for week4Iterator in fourthWeekExpenses {
-             sumWeek4 += Int(week4Iterator.amount)
-         }
-         
-         
-         print(sumWeek1)
-         print(sumWeek2)
-         print(sumWeek3)
-         print(sumWeek4)
-//        print("2")
-//        print(secondWeekExpenses)
-//        print("3")
-//        print(thirdWeekExpenses)
-//        print("4")
-//        print(fourthWeekExpenses)
+        
+        
+        for week1Iterator in firstWeekExpenses {
+            sumWeek1 += Int(week1Iterator.amount)
+        }
+        for week2Iterator in secondWeekExpenses {
+            sumWeek2 += Int(week2Iterator.amount)
+        }
+        for week3Iterator in thirdWeekExpenses {
+            sumWeek3 += Int(week3Iterator.amount)
+        }
+        for week4Iterator in fourthWeekExpenses {
+            sumWeek4 += Int(week4Iterator.amount)
+        }
+        
     }
     
     
     // highest expense
     func getHighestExpense() {
-        var highestExense = -2000000.0
+        print(expenseManager.currentMontExpenses)
+        var highestExense = -9223372036854775808.0
         var highestDate = Date.now
+        
         var currentMonthExpenses = expenseManager.currentMontExpenses
         for expense in currentMonthExpenses {
             if expense.amount > highestExense {
@@ -125,15 +149,21 @@ struct AnalyticsView: View {
             }
         }
         highestExpenseStateVar = highestExense
-        if highestExpenseStateVar  == -2000000.0 {
+        if highestExpenseStateVar  == -9223372036854775808.0 {
             highestExpenseStateVar = 0
+            highestDateForSending = Date.now
         }
     }
+    
     
     
     // highest day expense
     func highestDayExpense() {
         var dailyTotal: [Date: Double] = [:]
+        
+        maxTotal = -9223372036854775808.0
+        maxDate = nil
+        
         // Iterate through expenses and update the daily total
         for expense in expenseManager.currentMontExpenses {
             let calendar = Calendar.current
@@ -152,15 +182,22 @@ struct AnalyticsView: View {
                 maxDate = dateOnly
             }
         }
+        
+        if maxTotal == -9223372036854775808.0 {
+            maxTotal = 0
+            minDate = Date.now
+        }
     }
     
-    // Lowest day expense
+    // Lowest day expense  -- looks fixed
     func lowestDayExpense() {
         var dailyTotal: [Date: Double] = [:]
-        
+        minTotal = 2_147_483_647.0
+        minDate = nil
         
         // Iterate through expenses and update the daily total
         for expense in expenseManager.currentMontExpenses {
+            
             let calendar = Calendar.current
             let components = calendar.dateComponents([.year, .month, .day], from: expense.date)
             let dateOnly = calendar.date(from: components)!
@@ -171,11 +208,19 @@ struct AnalyticsView: View {
                 dailyTotal[dateOnly] = expense.amount
             }
             
+            print(dailyTotal)
+            
             // Update minDate and minTotal if needed
+            
             if let total = dailyTotal[dateOnly], total < minTotal {
                 minTotal = total
                 minDate = dateOnly
             }
+        }
+        
+        if minTotal == 2_147_483_647.0 {
+            minTotal = 0
+            maxDate = Date.now
         }
     }
     
@@ -225,6 +270,7 @@ struct AnalyticsView: View {
                         Color.white.ignoresSafeArea(edges: .top)
                     }
                     
+                    
                     VStack(alignment: .leading, spacing: 20) {
                         ZStack {
                             HStack {
@@ -232,7 +278,7 @@ struct AnalyticsView: View {
                                     .foregroundColor(.white)
                                     .font(.system(size: 26))
                                 
-                                Text("Dec, 2023")
+                                Text("\(formattedDate)")
                                     .fontDesign(.rounded)
                                     .font(.system(size: 20))
                                     .foregroundColor(.white)
@@ -245,14 +291,26 @@ struct AnalyticsView: View {
                             .fontDesign(.monospaced)
                             .frame(width: 30)
                             .opacity(0.03)
-                            
-                            
+                            .onChange(of: date, perform: { newDate in
+                                let year = getYear(from: newDate)
+                                let month = getMonth(from: newDate)
+                                expenseManager.getExpensesByMonth(forMonth: month, year: year)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    getHighestExpense()
+                                    lowestDayExpense()
+                                    highestDayExpense()
+                                    groupExpensesInFourWeeksInAMonth()
+                                }
+                            })
                         }
                         Text("Analytics")
                             .foregroundColor(.white)
                             .font(.title).fontWeight(.medium)
                         
+                        
+                        
                         VStack(alignment: .leading, spacing: 6) {
+                            
                             VStack (spacing : 30) {
                                 ChartsView(
                                     week1: sumWeek1,
@@ -260,35 +318,54 @@ struct AnalyticsView: View {
                                     week3: sumWeek3,
                                     week4: sumWeek4
                                 )
-                                    .frame(height: 200)
-                                HStack {
-                                    PieChartView(expensesByCategory: getCategorySum(expenses: expenseManager.currentMontExpenses))
-                                        .frame(height: 200)
+                                .opacity(expenseManager.currentMontExpenses.isEmpty ? 0 : 1)
+                                .frame(height: 200)
+                                
+                                if expenseManager.currentMontExpenses.isEmpty {
+                                    Text("No data available for this month.")
+                                        .font(.title3).bold()
+                                        .offset(x: 0, y: 0) // Adjust the offset values as needed
+                                        .animation(.easeInOut(duration: 1.0))
                                     
                                 }
+                                
+                                HStack {
+                                    PieChartView(expensesByCategory: getCategorySum(expenses: expenseManager.currentMontExpenses))
+                                        .opacity(expenseManager.currentMontExpenses.isEmpty ? 0 : 1)
+                                        .frame(height: 200)
+                                }
+                                
                             }
                             
                         }
                         .padding(5)
                         .frame(width: geometry.size.width - 32)
                         .cornerRadius(20)
+                        
+                        
                         MainExpensesView(
                             highestExpense: highestExpenseStateVar,
                             highestExpenseDate: highestDateForSending, highestDay: maxDate ?? Date.now ,
                             lowestDay : minDate ?? Date.now ,
                             maxTotal: Int(maxTotal),
                             minTotal: Double(Int(minTotal))
-                            
                         )
+                        .opacity(expenseManager.currentMontExpenses.isEmpty ? 0 : 1)
+                        
                     }
+                    
                     .frame(width: geometry.size.width - 32, height: geometry.size.height - 150)
                 }
+                
                 .onAppear {
-                    expenseManager.getExpensesByMonth(forMonth: 12, year: 2023)
-                    getHighestExpense()
-                    lowestDayExpense()
-                    highestDayExpense()
-                    groupExpensesInFourWeeksInAMonth()
+                    expenseManager.getExpensesByMonth(forMonth: selectedMonth, year: selectedYear)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        getHighestExpense()
+                        lowestDayExpense()
+                        highestDayExpense()
+                        groupExpensesInFourWeeksInAMonth()
+                    }
+                    
                     
                 }
             }

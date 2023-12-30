@@ -201,7 +201,6 @@ struct ExpensesView: View {
                             .onChange(of: date, perform: { newDate in
                                 let year = getYear(from: newDate)
                                 let month = getMonth(from: newDate)
-//                                print("Selected Year: \(year), Month: \(month)")
                                 expenseManager.getExpensesByMonth(forMonth: month, year: year)
                             })
                             
