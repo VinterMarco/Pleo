@@ -13,7 +13,7 @@ struct CustomTabView: View {
     
     var body: some View {
         TabView {
-            Text("Savings")
+            SavingsView()
                 .tabItem {
                     Label("Savings", systemImage: "dollarsign.circle.fill")
                 }

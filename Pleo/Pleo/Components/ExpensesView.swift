@@ -271,8 +271,6 @@ struct ExpensesView: View {
                 }
             }
             .onAppear {
-//                print(selectedYear)
-//                print(selectedMonth)
                 expenseManager.getExpensesByMonth(forMonth: self.selectedMonth, year: self.selectedYear)
                 getCategorySumForCurrentDay()
                 
