@@ -8,12 +8,6 @@
 import Foundation
 
 
-//Expense Name : Smart Watch
-//Description : I bought an Apple Watch
-//Ammount : 520
-//Category : Other
-//Date : 2023-12-20 14:27:32 +0000
-
 struct Expense : Identifiable, Codable {
     var id = UUID()
     var title : String

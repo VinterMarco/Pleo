@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct SavingsView: View {
+    
+    @State var showAddGoalView : Bool = false
+    @StateObject private var goalsManager = SavingGoalsManager()
+
+    
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
@@ -36,11 +41,11 @@ struct SavingsView: View {
                                 .font(.system(size: 28))
                                 .bold()
                             HStack {
-                                Text("5 dreams in the making")
+                                Text("\(goalsManager.savingGoals.count) dreams in the making")
                                     .offset(y : -3)
                                     .font(.system(size: 22))
                                 Button {
-                                    // more code to come
+                                    showAddGoalView.toggle()
                                 } label: {
                                     Image(systemName: "plus")
                                         .padding(18)
@@ -52,34 +57,23 @@ struct SavingsView: View {
                                         .shadow(color: .blue, radius: 2)
                                         .offset(x : 7)
                                 }
+                                .sheet(isPresented: $showAddGoalView) {
+                                    AddGoalsSheetView()
+                                }
                             }
                         }
                         .padding(0)
-                        .frame(width: geometry.size.width - 80)
+                        .frame(width: geometry.size.width - 70)
 
                         .padding()
                         .background(.white)
                         .cornerRadius(10)
                         
                         VStack(alignment: .leading, spacing: 20) {
-//                            ScrollView {
-//                                VStack {
-//                                    Text("Saving 1")
-//                                    Text("Saving 2")
-//                                    Text("Saving 3")
-//                                    Text("Saving 4")
-//                                    Text("Saving 5")
-//                                    Text("Saving 6")
-//                                    Text("Saving 7")
-//                                }
-//                                .frame(maxWidth: .infinity)
-//                            }
                             SavingsListView()
                         }
                         
-                        .frame(width: geometry.size.width - 50, height : 420)
-//                        .background(.green)
-
+                        .frame(width: geometry.size.width - 32, height : 420)
                         
                     }
                     // end of main vstack
@@ -87,7 +81,6 @@ struct SavingsView: View {
 
                     .padding(0)
                     .frame(width: geometry.size.width - 32, height: geometry.size.height - 10)
-//                    .background(.red)
                 }
             }
             .navigationTitle("Savings")

@@ -47,6 +47,9 @@
 		A147F1FF2B3592FF00918DF3 /* ExpensesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */; };
 		A16F73E22B44237A000550D5 /* SavingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F73E12B44237A000550D5 /* SavingsView.swift */; };
 		A16F73E42B4435C0000550D5 /* SavingsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F73E32B4435C0000550D5 /* SavingsListView.swift */; };
+		A16F73E62B453976000550D5 /* SavingGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F73E52B453976000550D5 /* SavingGoal.swift */; };
+		A16F73E82B453A95000550D5 /* SavingGolsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F73E72B453A95000550D5 /* SavingGolsViewModel.swift */; };
+		A16F73EA2B453C95000550D5 /* AddGoalsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F73E92B453C95000550D5 /* AddGoalsSheetView.swift */; };
 		A1714CA32B3834700032158E /* AnalyticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1714CA22B3834700032158E /* AnalyticsView.swift */; };
 		A1714CA52B386C160032158E /* ChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1714CA42B386C160032158E /* ChartsView.swift */; };
 		A1714CA72B386E5A0032158E /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1714CA62B386E5A0032158E /* PieChartView.swift */; };
@@ -74,6 +77,9 @@
 		A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesListView.swift; sourceTree = "<group>"; };
 		A16F73E12B44237A000550D5 /* SavingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsView.swift; sourceTree = "<group>"; };
 		A16F73E32B4435C0000550D5 /* SavingsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingsListView.swift; sourceTree = "<group>"; };
+		A16F73E52B453976000550D5 /* SavingGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingGoal.swift; sourceTree = "<group>"; };
+		A16F73E72B453A95000550D5 /* SavingGolsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SavingGolsViewModel.swift; path = Pleo/Core/Model/SavingGolsViewModel.swift; sourceTree = SOURCE_ROOT; };
+		A16F73E92B453C95000550D5 /* AddGoalsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGoalsSheetView.swift; sourceTree = "<group>"; };
 		A1714CA22B3834700032158E /* AnalyticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsView.swift; sourceTree = "<group>"; };
 		A1714CA42B386C160032158E /* ChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsView.swift; sourceTree = "<group>"; };
 		A1714CA62B386E5A0032158E /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
@@ -155,6 +161,7 @@
 				A19027352B331AE600375B6E /* AddExpensesSheetView.swift */,
 				A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */,
 				A16F73E32B4435C0000550D5 /* SavingsListView.swift */,
+				A16F73E92B453C95000550D5 /* AddGoalsSheetView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -164,6 +171,7 @@
 			children = (
 				A11DD3832B2F4C32004C0759 /* AuthViewModel.swift */,
 				A19027392B333D2D00375B6E /* ExpensesViewModel.swift */,
+				A16F73E72B453A95000550D5 /* SavingGolsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -197,6 +205,7 @@
 			children = (
 				A11DD3852B2F4CF6004C0759 /* User.swift */,
 				A11DD38D2B30D212004C0759 /* Expenses.swift */,
+				A16F73E52B453976000550D5 /* SavingGoal.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -362,6 +371,7 @@
 				A11DD38E2B30D212004C0759 /* Expenses.swift in Sources */,
 				A1714CA32B3834700032158E /* AnalyticsView.swift in Sources */,
 				A11DD3772B2F0828004C0759 /* LoginView.swift in Sources */,
+				A16F73E62B453976000550D5 /* SavingGoal.swift in Sources */,
 				A11DD37E2B2F0A05004C0759 /* InputView.swift in Sources */,
 				A11DD38C2B309923004C0759 /* SettingsRowView.swift in Sources */,
 				A147F1FF2B3592FF00918DF3 /* ExpensesListView.swift in Sources */,
@@ -370,12 +380,14 @@
 				A19027362B331AE600375B6E /* AddExpensesSheetView.swift in Sources */,
 				A11DD3862B2F4CF6004C0759 /* User.swift in Sources */,
 				A16F73E42B4435C0000550D5 /* SavingsListView.swift in Sources */,
+				A16F73EA2B453C95000550D5 /* AddGoalsSheetView.swift in Sources */,
 				A19027342B322BD600375B6E /* ExpensesView.swift in Sources */,
 				A1F55FE12B2DE9B000A4565D /* PleoApp.swift in Sources */,
 				A11DD38A2B3092A0004C0759 /* CustomTabView.swift in Sources */,
 				A16F73E22B44237A000550D5 /* SavingsView.swift in Sources */,
 				A1714CAB2B38C0DB0032158E /* MainExpensesView.swift in Sources */,
 				A1714CA52B386C160032158E /* ChartsView.swift in Sources */,
+				A16F73E82B453A95000550D5 /* SavingGolsViewModel.swift in Sources */,
 				A190273A2B333D2D00375B6E /* ExpensesViewModel.swift in Sources */,
 				A11DD3822B2F19CF004C0759 /* ProfileView.swift in Sources */,
 				A11DD3802B2F0F65004C0759 /* RegistrationView.swift in Sources */,

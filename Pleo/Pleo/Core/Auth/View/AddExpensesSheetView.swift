@@ -22,7 +22,7 @@ struct AddExpensesSheetView: View {
     var formattedDate: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM, yyyy" // Format as "Nov, 2023"
-        dateFormatter.locale = Locale(identifier: "en_CH") // Set the locale to Switzerland
+        dateFormatter.locale = Locale(identifier: "en_CH") 
         return dateFormatter.string(from: date)
     }
     
