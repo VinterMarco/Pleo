@@ -48,8 +48,8 @@ struct SavingsListVasselView : View {
                         ProgressView("", value: amount, total: target)
                             .progressViewStyle(LinearProgressViewStyle())
                             .tint(.mint)
-                            
-                            
+                        
+                        
                         
                     }
                 }
@@ -72,16 +72,25 @@ struct SavingsListView: View {
         VStack {
             ScrollView(showsIndicators: false) {
                 ForEach(goalsManager.savingGoals, id: \.id) { expense in
-                    VStack {
-                        SavingsListVasselView(amount: expense.addedAmount, title: expense.title, date: expense.lastDepositDate, target: expense.targetAmount)
+                    NavigationStack {
+                        NavigationLink {
+                            SavingsDepositsView(savings: expense)
+                        } label: {
+                            VStack {
+                                SavingsListVasselView(amount: expense.addedAmount, title: expense.title, date: expense.lastDepositDate, target: expense.targetAmount)
+                                
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
                     }
-                    .frame(maxWidth: .infinity)
+                }
+                .onAppear {
+//                    goalsManager.getSaveGoals()
+//                    print("ON APPEAR IS ACTIVATED")
+//                    print(goalsManager.savingGoals)
+//                    print(goalsManager.savingGoals)
                 }
             }
-        }
-        .onAppear {
-            goalsManager.getSaveGoals()
-            print(goalsManager.savingGoals)
         }
     }
 }

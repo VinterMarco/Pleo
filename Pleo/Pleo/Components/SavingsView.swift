@@ -70,19 +70,23 @@ struct SavingsView: View {
                         .cornerRadius(10)
                         
                         VStack(alignment: .leading, spacing: 20) {
-                            SavingsListView()
+                                    SavingsListView()
                         }
                         
                         .frame(width: geometry.size.width - 32, height : 420)
                         
                     }
+                    .onAppear {
+                        goalsManager.getSaveGoals()
+                        print(goalsManager.savingGoals)
+                    }
                     // end of main vstack
                     .shadow(color: .gray, radius: 5)
-
                     .padding(0)
                     .frame(width: geometry.size.width - 32, height: geometry.size.height - 10)
                 }
             }
+            
             .navigationTitle("Savings")
             .navigationBarTitleDisplayMode(.large)
             .navigationBarHidden(true)

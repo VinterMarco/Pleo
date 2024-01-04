@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 import Combine
 
 
-class SavingGoalsManager : ObservableObject {
+class  SavingGoalsManager : ObservableObject {
     
     @Published var savingGoals: [SavingGoal] = []
     private var db = Firestore.firestore()
@@ -28,6 +28,21 @@ class SavingGoalsManager : ObservableObject {
             print("Error adding expense: \(error)")
         }
     }
+    
+    func updateSaveGoal(goalId: String, newAddedAmount: Double) {
+        let documentRef = db.collection("savingGoals").document(goalId)
+
+        // Update the addedAmount field
+        documentRef.updateData(["addedAmount": newAddedAmount]) { error in
+            if let error = error {
+                print("Error updating save goal: \(error)")
+            } else {
+                print("Save goal updated successfully")
+            }
+        }
+    }
+    
+
     
     
     

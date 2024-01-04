@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 
 struct SavingGoal : Identifiable, Codable {
+    @DocumentID var documenttName: String?
     var id = UUID()
     var title : String
     var addedAmount : Double
