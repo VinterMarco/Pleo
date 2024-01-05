@@ -14,18 +14,29 @@ struct SavingsDepositsView: View {
 
     var body: some View {
         Text(savings.title)
-        Text("current amount\(savings.addedAmount)")
-        Text("targer amount\(savings.targetAmount)")
-        Text(savings.documenttName ?? "")
-        
+            .font(.title).bold()
+        HStack (spacing : 20) {
+            Text("\(savings.addedAmount.formatted(.currency(code: "RON")))")
+            Text("Current")
+        }
+        HStack (spacing : 20) {
+            Text("\(savings.targetAmount.formatted(.currency(code: "RON")))")
+            Text("Target")
+        }
+
         TextField("Ammount", value: $addAmmount, format: .currency(code: "RON"))
+            .frame(width: UIScreen.main.bounds.width - 60, height: 30)
+            .padding(8)
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.gray, lineWidth: 0.6)
+            )
+        
 
         Button {
-            let sendedAmount = savings.addedAmount + addAmmount
-            goalsManager.updateSaveGoal(
-            goalId: savings.documenttName ?? "",
-            newAddedAmount: sendedAmount
-            )
+            let newSaveGoal = SavingGoal(title: savings.title, addedAmount: savings.addedAmount + addAmmount, targetAmount: savings.targetAmount, lastDepositDate: Date.now, userId: savings.userId)
+            goalsManager.addSaveGoals(newSaveGoal)
+            goalsManager.deleteSaveGoal(withId: savings.documenttName ?? "")
         } label: {
             Text("Add Deposit")
                 .padding()

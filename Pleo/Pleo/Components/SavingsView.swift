@@ -58,7 +58,7 @@ struct SavingsView: View {
                                         .offset(x : 7)
                                 }
                                 .sheet(isPresented: $showAddGoalView) {
-                                    AddGoalsSheetView()
+                                    AddGoalsSheetView(goalsManager : goalsManager)
                                 }
                             }
                         }
@@ -70,7 +70,7 @@ struct SavingsView: View {
                         .cornerRadius(10)
                         
                         VStack(alignment: .leading, spacing: 20) {
-                                    SavingsListView()
+                                    SavingsListView(goalsManager: goalsManager)
                         }
                         
                         .frame(width: geometry.size.width - 32, height : 420)
@@ -78,8 +78,12 @@ struct SavingsView: View {
                     }
                     .onAppear {
                         goalsManager.getSaveGoals()
+                        
                         print(goalsManager.savingGoals)
                     }
+                    
+                    
+              
                     // end of main vstack
                     .shadow(color: .gray, radius: 5)
                     .padding(0)

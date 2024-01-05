@@ -14,7 +14,12 @@ struct AddGoalsSheetView: View {
     }
     
     @EnvironmentObject var viewModel : AuthViewModel
-    @StateObject private var goalsManager = SavingGoalsManager()
+//    @StateObject private var goalsManager = SavingGoalsManager()
+    @ObservedObject var goalsManager: SavingGoalsManager
+
+    
+    
+    
     @State private var typeOfGoal = "New Goal"
     @State private var goals = ["New Goal", "Existing Goal"]
     @State private var amount = 0.0
@@ -106,6 +111,6 @@ struct AddGoalsSheetView: View {
     }
 }
 
-#Preview {
-    AddGoalsSheetView()
-}
+//#Preview {
+//    AddGoalsSheetView()
+//}

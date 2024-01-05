@@ -17,6 +17,7 @@ struct SavingsListVasselView : View {
     @State var date = Date.now
     @State var target = 100.0
     
+
     
     func formattedDate(date : Date) -> String {
         let formatter = DateFormatter()
@@ -65,7 +66,9 @@ struct SavingsListVasselView : View {
 
 
 struct SavingsListView: View {
-    @StateObject private var goalsManager = SavingGoalsManager()
+//    @StateObject private var goalsManager = SavingGoalsManager()
+    @ObservedObject var goalsManager: SavingGoalsManager
+
     
     
     var body: some View {
@@ -85,6 +88,7 @@ struct SavingsListView: View {
                     }
                 }
                 .onAppear {
+                    
 //                    goalsManager.getSaveGoals()
 //                    print("ON APPEAR IS ACTIVATED")
 //                    print(goalsManager.savingGoals)
@@ -95,6 +99,6 @@ struct SavingsListView: View {
     }
 }
 
-#Preview {
-    SavingsListView()
-}
+//#Preview {
+//    SavingsListView()
+//}

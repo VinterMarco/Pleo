@@ -29,6 +29,10 @@ class  SavingGoalsManager : ObservableObject {
         }
     }
     
+        
+    
+    
+    
     func updateSaveGoal(goalId: String, newAddedAmount: Double) {
         let documentRef = db.collection("savingGoals").document(goalId)
 
@@ -64,4 +68,24 @@ class  SavingGoalsManager : ObservableObject {
                 }
             }
     }
+    
+    
+    //
+    
+    func deleteSaveGoal(withId goalId: String) {
+        let documentRef = db.collection("savingGoals").document(goalId)
+        
+        
+        
+        // Delete the document
+        documentRef.delete { error in
+            if let error = error {
+                print("Error deleting document: \(error)")
+            } else {
+                print("Document successfully deleted!")
+            }
+        }
+    }
+        
+        //
 }
