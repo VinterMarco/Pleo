@@ -10,8 +10,9 @@ import SwiftUI
 struct SavingsView: View {
     
     @State var showAddGoalView : Bool = false
-    @StateObject private var goalsManager = SavingGoalsManager()
-
+    @EnvironmentObject var savingsManager : SavingGoalsManager
+    
+    
     
     var body: some View {
         NavigationStack {
@@ -29,7 +30,7 @@ struct SavingsView: View {
                             .font(.system(size: 23))
                             .foregroundColor(.white)
                             .bold()
-                            
+                        
                         Text("Savings")
                             .foregroundStyle(.white)
                             .font(.title).fontWeight(.medium)
@@ -41,7 +42,7 @@ struct SavingsView: View {
                                 .font(.system(size: 28))
                                 .bold()
                             HStack {
-                                Text("\(goalsManager.savingGoals.count) dreams in the making")
+                                Text("\(savingsManager.savingGoals.count) dreams in the making")
                                     .offset(y : -3)
                                     .font(.system(size: 22))
                                 Button {
@@ -58,32 +59,31 @@ struct SavingsView: View {
                                         .offset(x : 7)
                                 }
                                 .sheet(isPresented: $showAddGoalView) {
-                                    AddGoalsSheetView(goalsManager : goalsManager)
+                                    AddGoalsSheetView()
+                                        .environmentObject(savingsManager) // This makes myObject available to the entire view hierarchy
+                                    
                                 }
                             }
                         }
                         .padding(0)
                         .frame(width: geometry.size.width - 70)
-
+                        
                         .padding()
                         .background(.white)
                         .cornerRadius(10)
                         
                         VStack(alignment: .leading, spacing: 20) {
-                                    SavingsListView(goalsManager: goalsManager)
+                            SavingsListView()
+                                .environmentObject(savingsManager) // This makes myObject available to the entire view hierarchy
                         }
-                        
                         .frame(width: geometry.size.width - 32, height : 420)
                         
                     }
                     .onAppear {
-                        goalsManager.getSaveGoals()
-                        
-                        print(goalsManager.savingGoals)
+                        savingsManager.getSaveGoals()
+                        print(savingsManager.savingGoals)
                     }
-                    
-                    
-              
+
                     // end of main vstack
                     .shadow(color: .gray, radius: 5)
                     .padding(0)

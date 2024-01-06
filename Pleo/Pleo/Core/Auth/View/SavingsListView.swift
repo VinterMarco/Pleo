@@ -11,14 +11,9 @@ import SwiftUI
 
 struct SavingsListVasselView : View {
     
-    @StateObject private var goalsManager = SavingGoalsManager()
-    @State var amount = 0.0
-    @State var title = ""
-    @State var date = Date.now
-    @State var target = 100.0
-    
-
-    
+    @EnvironmentObject var savingsManager : SavingGoalsManager
+    var index  = 0
+ 
     func formattedDate(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
@@ -33,29 +28,35 @@ struct SavingsListVasselView : View {
                     .font(.system(size: 40))
                     .foregroundColor(.green)
                 VStack (alignment : .leading, spacing: 4) {
-                    Text("\(amount.formatted(.currency(code: "RON")))")
+                    Text("\(savingsManager.savingGoals[index].addedAmount.formatted(.currency(code: "RON")))")
                         .font(.title2)
                         .bold()
-                    Text(" \(title) ~ Last Deposit : \(formattedDate(date: date))")
+                    HStack(spacing : 4) {
+                        Text(" \(savingsManager.savingGoals[index].title)")
+                            .foregroundStyle(.black)
+                        Text("~ Last Deposit : \(formattedDate(date: savingsManager.savingGoals[index].lastDepositDate))")
+
+                    }
+
                         .font(.system(size: 12))
                         .bold()
                         .foregroundStyle(.gray)
                         .offset(x : -3)
                     VStack (alignment : .leading, spacing : -11){
-                        Text("Left to save : \((target - amount).formatted(.currency(code: "RON")))")
+                        Text("Left to save : \((savingsManager.savingGoals[index].targetAmount - savingsManager.savingGoals[index].addedAmount).formatted(.currency(code: "RON")))")
                             .font(.system(size: 10))
                             .foregroundColor(.primary)
                         
-                        ProgressView("", value: amount, total: target)
+                        ProgressView("", value: savingsManager.savingGoals[index].addedAmount, total: savingsManager.savingGoals[index].targetAmount)
                             .progressViewStyle(LinearProgressViewStyle())
                             .tint(.mint)
-                        
-                        
-                        
                     }
                 }
                 
             }
+        }
+        .onAppear {
+            savingsManager.getSaveGoals()
         }
         .padding()
         .background(.white)
@@ -66,21 +67,18 @@ struct SavingsListVasselView : View {
 
 
 struct SavingsListView: View {
-//    @StateObject private var goalsManager = SavingGoalsManager()
-    @ObservedObject var goalsManager: SavingGoalsManager
 
-    
-    
+    @EnvironmentObject var savingsManager : SavingGoalsManager
+
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
-                ForEach(goalsManager.savingGoals, id: \.id) { expense in
-                    NavigationStack {
+                ForEach(Array(savingsManager.savingGoals.enumerated()), id: \.element.id) { (index, expense)    in                 NavigationStack {
                         NavigationLink {
                             SavingsDepositsView(savings: expense)
                         } label: {
                             VStack {
-                                SavingsListVasselView(amount: expense.addedAmount, title: expense.title, date: expense.lastDepositDate, target: expense.targetAmount)
+                                SavingsListVasselView(index : index)
                                 
                             }
                             .frame(maxWidth: .infinity)
@@ -88,17 +86,12 @@ struct SavingsListView: View {
                     }
                 }
                 .onAppear {
-                    
-//                    goalsManager.getSaveGoals()
-//                    print("ON APPEAR IS ACTIVATED")
-//                    print(goalsManager.savingGoals)
-//                    print(goalsManager.savingGoals)
                 }
             }
         }
     }
 }
 
-//#Preview {
-//    SavingsListView()
-//}
+#Preview {
+    SavingsListView()
+}

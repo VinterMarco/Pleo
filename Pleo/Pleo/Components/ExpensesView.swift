@@ -73,7 +73,7 @@ struct ExpensesView: View {
     }
     
     
- 
+    
     
     
     
@@ -89,7 +89,7 @@ struct ExpensesView: View {
     
     func groupExpensesByCategory(expenses: [Pleo.Expense]) -> [String: [Pleo.Expense]] {
         var groupedExpenses = [String: [Pleo.Expense]]()
-
+        
         for expense in expenses {
             let category = expense.category
             if var categoryExpenses = groupedExpenses[category] {
@@ -104,19 +104,19 @@ struct ExpensesView: View {
     
     
     func getYear(from date: Date) -> Int {
-         let calendar = Calendar.current
-         let year = calendar.component(.year, from: date)
-         return year
-     }
-
-     func getMonth(from date: Date) -> Int {
-         let calendar = Calendar.current
-         let month = calendar.component(.month, from: date)
-         return month
-     }
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        return year
+    }
+    
+    func getMonth(from date: Date) -> Int {
+        let calendar = Calendar.current
+        let month = calendar.component(.month, from: date)
+        return month
+    }
     
     
-
+    
     // Function to calculate the sum of expenses for each category with color and string
     func getCategorySum(expenses: [Pleo.Expense]) -> [(category: String, sum: Double, color: Color, icon: String, entries: [Pleo.Expense])] {
         let groupedExpenses = groupExpensesByCategory(expenses: expenses)
@@ -143,8 +143,8 @@ struct ExpensesView: View {
         for expense in expensesForToday {
             moneySpentToday += expense.amount
         }
-   }
-
+    }
+    
     
     // Function to get color and icon for a given category
     func getColorAndIcon(for category: String) -> (color: Color, icon: String) {
@@ -161,8 +161,8 @@ struct ExpensesView: View {
             return (color: .pink, icon: "ellipsis.circle.fill")
         }
     }
-
-
+    
+    
     
     
     
@@ -234,10 +234,9 @@ struct ExpensesView: View {
                                 }
                                 .sheet(isPresented: $addExpenseIsVisible) {
                                     AddExpensesSheetView()
-                                        .presentationDetents([.fraction(0.90)])
                                         .onDisappear {
-                                                 getCategorySumForCurrentDay()
-                                             }
+                                            getCategorySumForCurrentDay()
+                                        }
                                 }
                                 
                             }
@@ -253,14 +252,14 @@ struct ExpensesView: View {
                         VStack(spacing: geometry.size.width < 600 ? 10 : 20) {
                             ForEach(getCategorySum(expenses: expenseManager.currentMontExpenses ), id: \.category) { categorySum in
                                 NavigationLink {
-                                        ExpensesListView(expensesList: categorySum.entries)
+                                    ExpensesListView(expensesList: categorySum.entries)
                                 } label: {
                                     ExpenseItemView(title: categorySum.category, amount: categorySum.sum, colorOfLabel: categorySum.color, labelImage: categorySum.icon)
-
-
+                                    
+                                    
                                 }
                             }
-
+                            
                             
                         }
                         .frame(height: 450)

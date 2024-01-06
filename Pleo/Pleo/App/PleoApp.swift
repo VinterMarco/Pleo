@@ -13,6 +13,7 @@ import Firebase
 @main
 struct PleoApp: App {
     @StateObject var viewModel = AuthViewModel()
+    @StateObject var savingsManager = SavingGoalsManager()
     
     init() {
         FirebaseApp.configure()
@@ -21,6 +22,7 @@ struct PleoApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
+                .environmentObject(savingsManager)
         }
     }
 }

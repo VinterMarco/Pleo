@@ -14,8 +14,8 @@ struct AddGoalsSheetView: View {
     }
     
     @EnvironmentObject var viewModel : AuthViewModel
-//    @StateObject private var goalsManager = SavingGoalsManager()
-    @ObservedObject var goalsManager: SavingGoalsManager
+    @EnvironmentObject var savingsManager : SavingGoalsManager
+
 
     
     
@@ -86,13 +86,8 @@ struct AddGoalsSheetView: View {
                 
                 
                 Button {
-                    print("title \(goalName)")
-                    print("amount \(amount)")
-                    print("targeAmount \(targetAmount)")
-                    print("last deposit date \(lastDepositDate)")
-                    print("user id \(viewModel.currentUser?.id ?? "unasigned to a user")")
                     let newGoal = SavingGoal(title: goalName, addedAmount: amount, targetAmount: targetAmount, lastDepositDate: Date.now, userId: viewModel.currentUser?.id ?? "unasigned to a user")
-                    goalsManager.addSaveGoals(newGoal)
+                    savingsManager.addSaveGoals(newGoal)
                     dismiss()
                 } label: {
                     Text("Add Goal")
@@ -111,6 +106,6 @@ struct AddGoalsSheetView: View {
     }
 }
 
-//#Preview {
-//    AddGoalsSheetView()
-//}
+#Preview {
+    AddGoalsSheetView()
+}
