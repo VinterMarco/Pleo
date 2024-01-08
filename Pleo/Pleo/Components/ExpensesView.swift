@@ -34,7 +34,11 @@ struct ExpenseItemView: View {
             Spacer()
             VStack {
                 Text("\(amount.formatted(.currency(code: "RON")))")
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(Color(
+                        red: 1.0 - 255 / 255.0,
+                        green: 1.0 - 190 / 255.0,
+                        blue: 1.0 - 152 / 255.0
+                    ))
                     .bold()
             }
         }
@@ -173,7 +177,7 @@ struct ExpensesView: View {
             GeometryReader { geometry in
                 ZStack {
                     VStack(spacing: 0) {
-                        Color.blue.ignoresSafeArea(edges: .top)
+                        Color(red: 255 / 255.0, green: 190 / 255.0, blue: 152 / 255.0).ignoresSafeArea(edges: .top)
                         Color.white.ignoresSafeArea(edges: .top)
                         Color.white.ignoresSafeArea(edges: .top)
                         Color.white.ignoresSafeArea(edges: .top)
@@ -216,8 +220,12 @@ struct ExpensesView: View {
                             
                             HStack(spacing: geometry.size.width < 600 ? 100 : 110) {
                                 Text("\((availableBudget - allExpensesSumState).formatted(.currency(code: "RON")))")
-                                    .font(.system(size: geometry.size.width < 600 ? 23 : 36).bold())
-                                    .foregroundStyle(.blue)
+                                    .font(.system(size: geometry.size.width < 600 ? 20 : 30).bold())
+                                    .foregroundStyle(Color(
+                                        red: 1.0 - 255 / 255.0,
+                                        green: 1.0 - 190 / 255.0,
+                                        blue: 1.0 - 152 / 255.0
+                                    ))
                                 
                                 Button {
                                     addExpenseIsVisible.toggle()
@@ -227,10 +235,18 @@ struct ExpensesView: View {
                                         .padding(20)
                                         .font(.system(size: geometry.size.width < 600 ? 24 : 30))
                                         .bold()
-                                        .background(.blue)
+                                        .background(Color(
+                                            red: 1.0 - 255 / 255.0,
+                                            green: 1.0 - 190 / 255.0,
+                                            blue: 1.0 - 152 / 255.0
+                                        ))
                                         .clipShape(.circle)
                                         .foregroundColor(.white)
-                                        .shadow(color: .blue, radius: 2)
+                                        .shadow(color: Color(
+                                            red: 1.0 - 255 / 255.0,
+                                            green: 1.0 - 190 / 255.0,
+                                            blue: 1.0 - 152 / 255.0
+                                        ), radius: 2)
                                 }
                                 .sheet(isPresented: $addExpenseIsVisible) {
                                     AddExpensesSheetView()

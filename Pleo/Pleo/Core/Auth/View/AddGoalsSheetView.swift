@@ -96,7 +96,11 @@ struct AddGoalsSheetView: View {
                         .frame(width: UIScreen.main.bounds.width - 80, height: 24)
                         .foregroundStyle(.white)
                         .padding()
-                        .background(.blue)
+                        .background(Color(
+                            red: 1.0 - 255 / 255.0,
+                            green: 1.0 - 190 / 255.0,
+                            blue: 1.0 - 152 / 255.0
+                        ))
                         .clipShape(.buttonBorder)
                         .offset(y : 20)
                     

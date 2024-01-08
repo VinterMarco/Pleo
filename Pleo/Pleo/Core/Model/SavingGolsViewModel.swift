@@ -29,14 +29,29 @@ class  SavingGoalsManager : ObservableObject {
         }
     }
     
+    
+    
+    func updateGoalNameAndTargetAmount(goalId: String, newTargetAmount: Double, newSavingGoalName : String) {
+        let documentRef = db.collection("savingGoals").document(goalId)
         
+        let updateData: [String: Any] = [
+             "targetAmount": newTargetAmount,
+             "title": newSavingGoalName
+         ]
+        documentRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating save goal: \(error)")
+            } else {
+                print("Save goal updated successfully")
+            }
+        }
+
+    }
     
     
     
     func updateSaveGoal(goalId: String, newAddedAmount: Double) {
         let documentRef = db.collection("savingGoals").document(goalId)
-
-        // Update the addedAmount field
         documentRef.updateData(["addedAmount": newAddedAmount]) { error in
             if let error = error {
                 print("Error updating save goal: \(error)")
@@ -46,7 +61,7 @@ class  SavingGoalsManager : ObservableObject {
         }
     }
     
-
+    
     
     
     
@@ -70,13 +85,9 @@ class  SavingGoalsManager : ObservableObject {
     }
     
     
-    //
     
     func deleteSaveGoal(withId goalId: String) {
         let documentRef = db.collection("savingGoals").document(goalId)
-        
-        
-        
         // Delete the document
         documentRef.delete { error in
             if let error = error {
@@ -86,6 +97,5 @@ class  SavingGoalsManager : ObservableObject {
             }
         }
     }
-        
-        //
+    
 }

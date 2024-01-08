@@ -264,7 +264,7 @@ struct AnalyticsView: View {
             GeometryReader { geometry in
                 ZStack {
                     VStack(spacing: 0) {
-                        Color.blue.ignoresSafeArea(edges: .top)
+                        Color(red: 255 / 255.0, green: 190 / 255.0, blue: 152 / 255.0).ignoresSafeArea(edges: .top)
                         Color.white.ignoresSafeArea(edges: .top)
                         Color.white.ignoresSafeArea(edges: .top)
                         Color.white.ignoresSafeArea(edges: .top)

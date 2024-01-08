@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CustomTabView: View {
     
+
     
     var body: some View {
         TabView {
@@ -25,6 +26,7 @@ struct CustomTabView: View {
                 .tabItem {
                     Label("Analytics", systemImage: "chart.bar.fill")
                 }
+                
             ProfileView()
                 .tabItem {
                     Label("Account", systemImage: "person.crop.circle.fill")

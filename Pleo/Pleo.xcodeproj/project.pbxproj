@@ -58,6 +58,7 @@
 		A19027342B322BD600375B6E /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19027332B322BD600375B6E /* ExpensesView.swift */; };
 		A19027362B331AE600375B6E /* AddExpensesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19027352B331AE600375B6E /* AddExpensesSheetView.swift */; };
 		A190273A2B333D2D00375B6E /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19027392B333D2D00375B6E /* ExpensesViewModel.swift */; };
+		A19E2B802B4BE09F00C8CA01 /* EditModeOnSavings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19E2B7F2B4BE09F00C8CA01 /* EditModeOnSavings.swift */; };
 		A1F55FE12B2DE9B000A4565D /* PleoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F55FE02B2DE9B000A4565D /* PleoApp.swift */; };
 		A1F55FE32B2DE9B000A4565D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F55FE22B2DE9B000A4565D /* ContentView.swift */; };
 		A1F55FE52B2DE9B100A4565D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1F55FE42B2DE9B100A4565D /* Assets.xcassets */; };
@@ -89,6 +90,7 @@
 		A19027332B322BD600375B6E /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 		A19027352B331AE600375B6E /* AddExpensesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpensesSheetView.swift; sourceTree = "<group>"; };
 		A19027392B333D2D00375B6E /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExpensesViewModel.swift; path = Pleo/Core/Auth/View/ExpensesViewModel.swift; sourceTree = SOURCE_ROOT; };
+		A19E2B7F2B4BE09F00C8CA01 /* EditModeOnSavings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeOnSavings.swift; sourceTree = "<group>"; };
 		A1F55FDD2B2DE9B000A4565D /* Pleo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pleo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1F55FE02B2DE9B000A4565D /* PleoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PleoApp.swift; sourceTree = "<group>"; };
 		A1F55FE22B2DE9B000A4565D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				A147F1FE2B3592FF00918DF3 /* ExpensesListView.swift */,
 				A16F73E32B4435C0000550D5 /* SavingsListView.swift */,
 				A16F73E92B453C95000550D5 /* AddGoalsSheetView.swift */,
+				A19E2B7F2B4BE09F00C8CA01 /* EditModeOnSavings.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				A16F73EC2B46BCB8000550D5 /* SavingsDepositsView.swift in Sources */,
 				A16F73E42B4435C0000550D5 /* SavingsListView.swift in Sources */,
 				A16F73EA2B453C95000550D5 /* AddGoalsSheetView.swift in Sources */,
+				A19E2B802B4BE09F00C8CA01 /* EditModeOnSavings.swift in Sources */,
 				A19027342B322BD600375B6E /* ExpensesView.swift in Sources */,
 				A1F55FE12B2DE9B000A4565D /* PleoApp.swift in Sources */,
 				A11DD38A2B3092A0004C0759 /* CustomTabView.swift in Sources */,

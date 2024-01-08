@@ -21,6 +21,11 @@ struct PleoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .tint(Color(
+                    red: 1.0 - 255 / 255.0,
+                    green: 1.0 - 190 / 255.0,
+                    blue: 1.0 - 152 / 255.0
+                ))
                 .environmentObject(viewModel)
                 .environmentObject(savingsManager)
         }
