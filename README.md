@@ -4,10 +4,6 @@ iOS App built using Swift, SwiftUI, Firebase.
 
 Builded for iOS 17.
 
-## About
-
-...... more info to be added ......
-
 ## Main Features
 
 - Expense Tracking
@@ -34,3 +30,6 @@ Builded for iOS 17.
 
 ### Auth & Settings
 ![1111 1](https://github.com/VinterMarco/Pleo/assets/95470600/0d87b99b-dd7e-4013-9c62-c5fe86bb3cdf)
+
+
+
