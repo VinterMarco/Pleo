@@ -14,10 +14,6 @@ Builded for iOS 17.
 ...... more info to be added ......
 
 
-## Features
-
-...... more info to be added ......
-
 ## Screenshots
 
 ### Saving Goals
