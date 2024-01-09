@@ -53,13 +53,15 @@ struct ExpenseItemView: View {
 
 struct ExpensesView: View {
     
-    
+    // test
+    @EnvironmentObject var expenseManager : ExpenseManager
+    //
     
     
     @State private var date = Date.now
     @State private var isDatePickerVisible = false
     @State private var addExpenseIsVisible = false
-    @ObservedObject var expenseManager = ExpenseManager()
+//    @ObservedObject var expenseManager = ExpenseManager()
     
     @State  var allExpensesSumState = 0.0
     @State  var availableBudget = 15000.0
@@ -173,6 +175,12 @@ struct ExpensesView: View {
     
     
     var body: some View {
+        //     test
+        @Environment(\.presentationMode) var presentationMode
+
+        //
+        
+        
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {

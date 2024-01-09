@@ -1,39 +1,30 @@
 //
-//  EditModeOnSavings.swift
+//  EditExpensesView.swift
 //  Pleo
 //
-//  Created by Vinter Marco on 08.01.2024.
+//  Created by Vinter Marco on 09.01.2024.
 //
 
 import SwiftUI
 
-struct EditModeOnSavings: View {
+struct EditExpensesView: View {
     
-    @State var savings : SavingGoal
-    @EnvironmentObject var viewModel : AuthViewModel
-    @EnvironmentObject var savingsManager : SavingGoalsManager
-
-    //
-    @Binding var presentationMode: PresentationMode
-    //
-    
-    //
-    
-    @State private var typeOfGoal = "New Goal"
-    @State private var goals = ["New Goal", "Existing Goal"]
-    @State private var amount = 0.0
-    @State private var lastDepositDate = Date.now
-    @State private var lastDepositString =  "2024-01-05"
-    @State var goalsList  = ["a","b","c"]
-    @State  var selectedSavingPlan:String = ""
-    
-    
-    @State private var selectedSavingPlanID =  "id"
+    @State  var title : String
+    @State  var date : Date
+    @State  var amount : Double
+    @State var category : String
+    @State var documentName : String
     @Environment(\.dismiss) private var dismiss
-    
 
+//    @ObservedObject var expenseManager = ExpenseManager()
     
-    //
+    @Binding var presentationMode : PresentationMode
+    
+    // test
+    @EnvironmentObject var expenseManager : ExpenseManager
+    // 
+
+
     var body: some View {
         NavigationStack {
                 VStack {
@@ -43,7 +34,7 @@ struct EditModeOnSavings: View {
                                 .font(.footnote)
                                 .foregroundStyle(.black)
 
-                            TextField("Edit goal name", text: $savings.title)
+                            TextField("Edit goal name", text: $title)
                                 .frame(width: UIScreen.main.bounds.width - 60, height: 30)
                                 .padding(8)
                                 .overlay(
@@ -52,10 +43,10 @@ struct EditModeOnSavings: View {
                                 )
                         }
                         VStack(alignment: .leading) {
-                            Text("Target Ammount")
+                            Text("Ammount")
                                 .font(.footnote)
                                 .foregroundStyle(.black)
-                            TextField("Edit Target Ammount", value: $savings.targetAmount, format: .currency(code: "RON"))
+                            TextField("Edit  Ammount", value: $amount, format: .currency(code: "RON"))
                                 .frame(width: UIScreen.main.bounds.width - 60, height: 30)
                                 .padding(8)
                                 .overlay(
@@ -67,12 +58,12 @@ struct EditModeOnSavings: View {
                         
                         
                         Button {
-                            // more code to come 
-                            savingsManager.updateGoalNameAndTargetAmount(goalId: savings.documenttName ?? "", newTargetAmount: savings.targetAmount, newSavingGoalName: savings.title)
+                            // more code to come
+                            expenseManager.updateExpenseNameAndAmount(expenseId: documentName, newAmount: amount, newExpenseName: title)
                             dismiss()
                             presentationMode.dismiss()
                         } label: {
-                            Text("Edit Saving Goal")
+                            Text("Edit Expense")
                                 .bold()
                                 .font(.title3)
                                 .frame(width: UIScreen.main.bounds.width - 80, height: 24)
@@ -89,11 +80,11 @@ struct EditModeOnSavings: View {
                         }
                         
                         Button {
-                            savingsManager.deleteSaveGoal(withId: savings.documenttName ?? "")
+                            expenseManager.deleteExpensesByDocumentId(withId: documentName)
                             dismiss()
                             presentationMode.dismiss()
                         } label: {
-                            Text("Delete Saving Goal")
+                            Text("Delete Expense")
                                 .bold()
                                 .font(.title3)
                                 .frame(width: UIScreen.main.bounds.width - 80, height: 24)
@@ -106,11 +97,11 @@ struct EditModeOnSavings: View {
                         }
 
                 }
-            }            
+            }
         }
     }
 }
 
 //#Preview {
-//    EditModeOnSavings(savings: SavingGoal.MOCK_Save_Goal)
+//    EditExpensesView()
 //}

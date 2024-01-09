@@ -71,6 +71,41 @@ class ExpenseManager: ObservableObject {
     }
     
     
+    // edit expenses
+    
+    func updateExpenseNameAndAmount(expenseId: String, newAmount: Double, newExpenseName : String) {
+        let documentRef = db.collection("expenses").document(expenseId)
+        
+        let updateData: [String: Any] = [
+             "amount": newAmount,
+             "title": newExpenseName
+         ]
+        documentRef.updateData(updateData) { error in
+            if let error = error {
+                print("Error updating expense: \(error)")
+            } else {
+                print("Expese updated successfully")
+            }
+        }
+
+    }
+    
+    // delete expenses
+    
+    func deleteExpensesByDocumentId(withId expensesId: String) {
+        let documentRef = db.collection("expenses").document(expensesId)
+        // Delete the document
+        documentRef.delete { error in
+            if let error = error {
+                print("Error deleting document: \(error)")
+            } else {
+                print("Document successfully deleted!")
+            }
+        }
+    }
+    //
+    
+    
     func getExpensesByMonth(forMonth month: Int, year: Int) {
           let startComponents = DateComponents(year: year, month: month, day: 1)
           guard let startDate = Calendar.current.date(from: startComponents),

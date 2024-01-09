@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 
 struct Expense : Identifiable, Codable {
+    @DocumentID var documenttName: String?
     var id = UUID()
     var title : String
     var amount : Double

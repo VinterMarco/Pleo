@@ -22,7 +22,7 @@ struct ChartsView: View {
     var week2 = 0
     var week3 = 0
     var week4 = 0
-    var spendingGoal = 7500
+    var spendingGoal = 2100
     
     
     
@@ -58,7 +58,7 @@ struct ChartsView: View {
                     y: .value("Total Count", week4)
                 )
                 .foregroundStyle(week4 < spendingGoal ? .green : .red)
-                RuleMark (y : .value("Goal", 7500))
+                RuleMark (y : .value("Goal", 2100))
                     .foregroundStyle(Color.mint)
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
             }

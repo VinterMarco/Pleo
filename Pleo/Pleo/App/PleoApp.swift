@@ -14,6 +14,9 @@ import Firebase
 struct PleoApp: App {
     @StateObject var viewModel = AuthViewModel()
     @StateObject var savingsManager = SavingGoalsManager()
+    // test
+    @StateObject var expenseManager = ExpenseManager()
+    //
     
     init() {
         FirebaseApp.configure()
@@ -28,6 +31,9 @@ struct PleoApp: App {
                 ))
                 .environmentObject(viewModel)
                 .environmentObject(savingsManager)
+                // test 
+                .environmentObject(expenseManager)
+                //
         }
     }
 }
