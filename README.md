@@ -24,8 +24,8 @@ Builded for iOS 17.
 
 ### Expenses & Analytics
 
+![newwwww 1](https://github.com/VinterMarco/Pleo/assets/95470600/3b537a89-95bb-4dcd-86dc-0abb463952a3)
 
-![Untitled 1](https://github.com/VinterMarco/Pleo/assets/95470600/ebf766c9-ea66-45d3-bf41-3ac2aedefb06)
 
 
 ### Auth & Settings
